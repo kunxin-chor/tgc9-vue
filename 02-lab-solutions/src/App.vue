@@ -1,14 +1,19 @@
 <template>
-    <SayGreetings/>
+<div>
+    <!-- <SayGreetings/> -->
+    <Counter/>
+</div>
 </template>
 
 <script>
-import SayGreetings from './components/SayGreetings'
+//import SayGreetings from './components/SayGreetings'
+import Counter from './components/Counter'
 
 export default {
   name: 'App',
   components: {
-      SayGreetings
+      // SayGreetings, 
+      Counter
   }
 }
 </script>
