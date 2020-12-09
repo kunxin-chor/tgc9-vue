@@ -1,28 +1,38 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+      <MessageBox message="Danger danger will Robinson" bgcolor="green"></MessageBox>
+      <MessageBox message="The cow jumps over the moon" v-bind:bgcolor="preferedColor"></MessageBox>
+      <h1>{{text}}</h1>
+      <button v-on:click="buttonPressed">Click</button>
+      <input type="text" v-model='preferedColor'/>
+      <Light/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import MessageBox from "./components/MessageBox"
+import Light from "./components/Light"
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+      MessageBox, Light
+  },
+  data: function() {
+      return {
+          'text':'',
+          'preferedColor':'azure'
+      }
+  },
+  methods: {
+      'buttonPressed':function(){
+          this.text = "You clicked me!"
+      }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
