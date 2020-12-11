@@ -1,36 +1,20 @@
 <template>
+<div>
   <div class="todolist">
     <!-- for each task t in the tasks array, render one Task component -->
     <Task v-for="t in tasks" :task="t" :key="t.id" @delete_task="processDeleteTask" @task_updated="processUpdateTask"/>
-
-    <div>
-        <div>
-            <label class='form-label'>Task Name</label>
-            <input type="text" class='form-control' v-model='newTaskName'/>
-        </div>
-        <div>
-            <label class='form-label'>Urgency</label>
-            <select v-model="newTaskUrgency" class="form-control">
-                <option value="low">Low</option>
-                <option value="average">Average</option>
-                <option value="important">Important</option>
-            </select>
-        </div>
-      
-        <div>
-             <label class='form-label'>Date Due</label>
-            <input type="date" class='form-control' v-model='newTaskDateDue'/>
-        </div>
-        <button @click="addTask">Add Task</button>
-    </div>
   </div>
+    <h1>Adding a new task</h1>
+    <TaskForm @task_submitted="addTask"/>
+</div>
 </template>
 
 <script>
 import Task from "./Task";
+import TaskForm from "./TaskForm";
 export default {
   components: {
-    Task
+    Task, TaskForm
   },
   data: function() {
     return {
@@ -63,15 +47,10 @@ export default {
     };
   },
   methods:{
-      addTask:function() {
-          let newTask = {
-              'id': Math.floor(Math.random() * 10000 + 9999),
-              'name': this.newTaskName,
-              'urgency': this.newTaskUrgency,
-              'date_due': this.newTaskDateDue,
-              'done': false
-          };
-          this.tasks.push(newTask);
+      addTask:function(newTask) {
+          let cloneNewTask = {...newTask};
+          cloneNewTask.id = Math.floor(Math.random()*10000 + 9999);
+          this.tasks.push(cloneNewTask);
       },
       processDeleteTask:function(taskIdToDelete) {
           // index of the task in the tasks array that I want to delete

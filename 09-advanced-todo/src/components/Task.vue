@@ -14,45 +14,26 @@
         <a href="#" class="btn btn-danger" @click="deleteTask">Delete</a>
       </div>
       <div class="card-body" v-else>
-        <div>
-          <div>
-            <label class="form-label">Task Name</label>
-            <input type="text" class="form-control" v-model="newTaskName" />
-          </div>
-          <div>
-            <label class="form-label">Urgency</label>
-            <select v-model="newTaskUrgency" class="form-control">
-              <option value="low">Low</option>
-              <option value="average">Average</option>
-              <option value="important">Important</option>
-            </select>
-          </div>
-        <div>
-            <label class="form-label">Done</label>
-            <div class="form-check-input">
-                <input type="checkbox" v-model='newTaskDone'/>
-            </div>
-        </div>
-          <div>
-            <label class="form-label">Date Due</label>
-            <input type="date" class="form-control" v-model="newTaskDateDue" />
-          </div>
-          <button @click="updateTask" class="mt-3">Update</button>
-        </div>
+        <h2>Upate an existing task</h2>
+        <TaskForm v-bind:initialTask="task" v-on:task_submitted="updateTask"/>
       </div>
-    </div>
+  </div>
   </div>
 </template>
 
 <script>
+import TaskForm from "./TaskForm";
 export default {
+  components: {
+    TaskForm,
+  },
   data: function () {
     return {
       isEditing: false,
-      newTaskName:this.task.name,
-      newTaskUrgency:this.task.urgency,
-      newTaskDateDue:this.task.date_due,
-      newTaskDone:this.task.done
+      newTaskName: this.task.name,
+      newTaskUrgency: this.task.urgency,
+      newTaskDateDue: this.task.date_due,
+      newTaskDone: this.task.done,
     };
   },
   props: ["task"],
@@ -63,16 +44,16 @@ export default {
     editTask: function () {
       this.isEditing = true;
     },
-    updateTask:function() {
-        this.isEditing = false;
-        this.$emit('task_updated', {
-            'id': this.task.id,
-            'name': this.newTaskName,
-            'urgency': this.newTaskUrgency,
-            'date_due': this.newTaskDateDue,
-            'done': this.newTaskDone
-        })
-    }
+    updateTask: function (newTaskInfo) {
+      this.isEditing = false;
+      this.$emit("task_updated", {
+        id: this.task.id,
+        name: newTaskInfo.name,
+        urgency: newTaskInfo.urgency,
+        date_due: newTaskInfo.done,
+        done: newTaskInfo.date_due,
+      });
+    },
   },
 };
 </script>
