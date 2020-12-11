@@ -1,7 +1,7 @@
 <template>
   <div class="todolist">
     <!-- for each task t in the tasks array, render one Task component -->
-    <Task v-for="t in tasks" :task="t" :key="t.id" @delete_task="processDeleteTask"/>
+    <Task v-for="t in tasks" :task="t" :key="t.id" @delete_task="processDeleteTask" @task_updated="processUpdateTask"/>
 
     <div>
         <div>
@@ -16,6 +16,7 @@
                 <option value="important">Important</option>
             </select>
         </div>
+      
         <div>
              <label class='form-label'>Date Due</label>
             <input type="date" class='form-control' v-model='newTaskDateDue'/>
@@ -78,6 +79,15 @@ export default {
               return t.id == taskIdToDelete;
           });
           this.tasks.splice(indexToDelete, 1);
+      },
+      processUpdateTask:function(newTaskInfo) {
+          // find the index of the task within the tasks array that we want to update
+          let indexToUpdate = this.tasks.findIndex(function(t){
+              return t.id == newTaskInfo.id
+          })
+          // e.q.v this.tasks[indexToUpdate] = new TaskInfo
+          // but we must this.$set or else Vue cannot detect the changes in the array
+          this.$set(this.tasks, indexToUpdate, newTaskInfo);
       }
   }
 };
