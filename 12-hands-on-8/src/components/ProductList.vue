@@ -1,6 +1,8 @@
 <template>
 <div class="container">
-    <Product v-for='p in products' v-bind:key='p.id' v-bind:product='p'/>
+    <input type="text" v-model="search_by"/>
+    <p>Total cost of selected products = {{totalCost}}</p>
+    <Product v-for='p in searchResults' v-bind:key='p.id' v-bind:product='p'/>
 </div>
 </template>
 
@@ -12,6 +14,7 @@ export default {
   },
   data: function() {
     return {
+      search_by:'',  
       products: [
         {
           id: 1,
@@ -39,8 +42,24 @@ export default {
         }
       ]
     };
+  },
+  computed:{
+      searchResults:function(){
+          let results = this.products.filter((p)=>{
+              return p.name.toLowerCase().includes(this.search_by.toLowerCase())
+          })
+          return results;
+      },
+      totalCost:function(){
+          let reducer = (costSoFar, currentProduct)=>{
+              return costSoFar + currentProduct.price;
+          }
+          let total = this.searchResults.reduce(reducer, 0);
+          return total;
+      }
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>
