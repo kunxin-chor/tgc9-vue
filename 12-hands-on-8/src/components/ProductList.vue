@@ -8,39 +8,21 @@
 
 <script>
 import Product from './Product'
+import axios from 'axios'
+
 export default {
+  created:async function(){
+      // if we give Vue a relative URL, Vue will start looking for it in the /public folder
+      let response = await axios.get('products.json');
+      this.products = response.data;
+  },
   components:{
       Product
   },
   data: function() {
     return {
       search_by:'',  
-      products: [
-        {
-          id: 1,
-          price: 12,
-          name: "ACME Screwdriver",
-          type: "physical",
-          characteristics: ["discount", "hazard"],
-          image_url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQG2rlO8-PTxZin3RSrNjAIcDjEvau8VaaM31jk79NOsUlWftcGTmJnlwCk3JjySUqttxv0Xk&usqp=CAc'
-        },
-        {
-          id: 2,
-          price:15,
-          name: "Ebook on how to get rich",
-          type: "digital",
-          characteristics: ["download"],
-          image_url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjj2pyBnn2VZtUVn75pPKg-VhOEgKmeKw28T4oJS7cNLH_Nnxm8D2jO0QWY8bisYUNM9DYygM&usqp=CAc"
-        },
-        {
-          id: 3,
-          name: "ACME Chainsaw",
-          type: "physical",
-          price:18,
-          characteristics: ["hazard", "limited", "fragile"],
-          image_url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqAnbbV-nsSJpTarAf5KfWa2b_K7uxM79V-_hjwvVuoqSpcM84FjNYwyQnwztOvvQc6hHYzvk&usqp=CAc"
-        }
-      ]
+      products:[]
     };
   },
   computed:{
