@@ -23,7 +23,19 @@ export default new Vuex.Store({
       }
     ]
   },
+  getters: {
+    "customers":function(state){
+      return state.customers;
+    }
+  },
   mutations: {
+    "addNewCustomer":function(state, newCustomer) {
+      state.customers.push({
+        'id': Math.floor(Math.random() * 10000),
+        'name': newCustomer.name,
+        'email': newCustomer.email 
+      })
+    }
   },
   actions: {
   },
